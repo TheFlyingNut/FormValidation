@@ -10,6 +10,26 @@ form.addEventListener('submit', (event)=>{
     validate();
 })
 
+const sendData = (sRate, count) => {
+    if (sRate == count) {
+    alert('registration successfull ');
+    swal("Good job!", "You clicked the button!", "success");
+    }
+  }
+
+const successMsg = () =>{
+    let formCon = document.getElementsByClassName('form-control');
+    var count= formCon.length -1;
+    for (var i = 0; i < formCon.length; i++) {
+        if (formCon[i].className == "form-control success") {
+            var sRate = 0+i;
+        sendData(count);
+        } else{
+            return false;
+        }
+    }
+}
+
 const isEmail = (email) =>{
     var atSymbol = email.indexOf("@");
     if(atSymbol<1) return false;
@@ -36,34 +56,43 @@ const validate = () => {
 
 
     if (emailVal == ""){
-        setErrorMsg(emailVal, 'Email cannot be blank');
+        setErrorMsg(email, 'Email cannot be blank');
     } else if(!isEmail(emailVal)){
-        setErrorMsg(emailVal, 'Not a valid Email');
+        setErrorMsg(email, 'Not a valid Email');
     }
     else{
         setSuccessMsg(email);
     }
 
     if (phoneVal == "" || phoneVal == "123456789"){
-        setErrorMsg(phoneVal, 'Invalid Phone Number');
+        setErrorMsg(phone, 'Invalid Phone Number');
     } else if(phoneVal.length<10 || phoneVal.length>10){
-        setErrorMsg(phoneVal, 'Phone Number should be 10 digits long');
+        setErrorMsg(phone, 'Phone Number should be 10 digits long');
     }
     else{
         setSuccessMsg(phone);
     }
 
     if (passwordVal == ""){
-        setErrorMsg(passwordVal, 'Password cannot be blank');
-    } else if(passwordVal.includes(usernameVal)){
+        setErrorMsg(password, 'Password cannot be blank');
+    } else if(password.includes(usernameVal)){
         setErrorMsg(passwordVal, 'Password cannot contain the username');
     }
     else if(passwordVal.length<8){
-        setErrorMsg(passwordVal, 'Password cannot be less than 8 characters')
+        setErrorMsg(password, 'Password cannot be less than 8 characters')
     }
     else{
         setSuccessMsg(password);
     }
+
+    if (cpasswordVal == ""){
+        setErrorMsg(cpassword, 'Confirm Password cannot be blank');
+    } else if(passwordVal !== cpasswordVal){
+        setErrorMsg(cpassword, 'Passwords do not match');
+    } else{
+        setSuccessMsg(cpassword);
+    }
+    successMsg();
 }
 
 function setErrorMsg(input, errormsg){
